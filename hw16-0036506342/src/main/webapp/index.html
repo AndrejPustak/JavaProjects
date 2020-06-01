@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Galerija</title>
+		
+		<style type="text/css">
+		
+			h3 {font-style: italic; 
+				color: orange;
+				text-align: center;
+				}
+				
+			div.tag{
+				text-align: center;
+			}
+				
+			#tag button{
+				background-color: orange;
+				border: thin;
+				border-color: black;
+				color: black;
+				margin-top: 10px; 
+				margin-left: 10px;
+				font-style: italic;
+				padding: 14px 32px;
+				border-radius: 8px;
+			}
+			#tag button:hover {
+				box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+			}
+			
+			#slike img{
+				margin-top: 10px; 
+				margin-left: 10px;
+			}
+			#slike img:hover {
+				box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+			}
+			div.slike {
+				text-align: center;
+			}
+			
+			div.slika {
+				margin-top: 40px;
+				text-align: center;
+				font-size: 20px;
+				font-style: italic;
+			}
+		
+		</style>
+		
+		<script type="text/javascript">
+		  
+		  window.onload = function() {
+			  var xmlhttlp;
+			  
+			  if (window.XMLHttpRequest) {
+					// code for IE7+, Firefox, Chrome, Opera, Safari
+					xmlhttp=new XMLHttpRequest();
+				} else {
+					// code for IE6, IE5
+					xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+				}
+				
+				xmlhttp.onreadystatechange = function() {
+					if(xmlhttp.readyState==4 && xmlhttp.status==200) {
+						var text = xmlhttp.responseText;
+						var json = JSON.parse(text);
+						var html = "";
+						if(json.length==0) {
+							html = "No tags found..."
+						} else {
+							for(var i=0; i<json["tags"].length; i++) {
+								html += '<button value=' + json["tags"][i] + ' onclick="getPictures(this.value);">' + json["tags"][i] + '</button>';
+							}
+						}
+						document.getElementById("tag").innerHTML = html;
+					}
+				}
+				xmlhttp.open("GET", "rest/rest/tags", true);
+				xmlhttp.send();
+		  }
+		  
+		  function getPictures(tag){
+			  var xmlhttlp;
+			  
+			  if (window.XMLHttpRequest) {
+					// code for IE7+, Firefox, Chrome, Opera, Safari
+					xmlhttp=new XMLHttpRequest();
+				} else {
+					// code for IE6, IE5
+					xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+				}
+				
+				xmlhttp.onreadystatechange = function() {
+					if(xmlhttp.readyState==4 && xmlhttp.status==200) {
+						var text = xmlhttp.responseText;
+						var json = JSON.parse(text);
+						var html = "";
+						if(json.length==0) {
+							html = "No tags found..."
+						} else {
+							for(var i=0; i<json["names"].length; i++){
+								html += '<img src="rest/rest/miniImage/' + json["names"][i] + '" alt="' + json["names"][i] + '" onclick="pictureDesc(this.alt)">';
+								if((i+1)%4 == 0){
+									html+="<br>";
+								}
+							}
+						}
+						document.getElementById("slike").innerHTML = html;
+					}
+				}
+				xmlhttp.open("GET", "rest/rest/pictureNames/" + tag, true);
+				xmlhttp.send();
+		  }
+		  
+		  function pictureDesc(name){
+			  var xmlhttlp;
+			  
+			  if (window.XMLHttpRequest) {
+					// code for IE7+, Firefox, Chrome, Opera, Safari
+					xmlhttp=new XMLHttpRequest();
+				} else {
+					// code for IE6, IE5
+					xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+				}
+				
+				xmlhttp.onreadystatechange = function() {
+					if(xmlhttp.readyState==4 && xmlhttp.status==200) {
+						var text = xmlhttp.responseText;
+						var json = JSON.parse(text);
+						var html = "";
+						if(json.length==0) {
+							html = "No tags found..."
+						} else {
+							html+= '<img src="rest/rest/bigImage/' + json["name"] + '">';
+							html+="<br>";
+							html+=json["desc"];
+							html+="<br>";
+							
+							html+="List of tags: " + json["tags"][0];
+							
+							for(var i=1; i<json["tags"].length; i++) {
+								html += ', ' + json["tags"][i];
+							}
+						}
+						document.getElementById("slika").innerHTML = html;
+					}
+				}
+				xmlhttp.open("GET", "rest/rest/pictureDesc/" + name, true);
+				xmlhttp.send();
+		  }
+		  
+		</script>
+	</head>
+	<body>
+	
+		<h3>List of Tags:</h3>
+		<div id="tag" class="tag">&nbsp;</div>
+		<br>
+		<div id="slike" class="slike">&nbsp;</div>
+		
+		<div id="slika" class="slika">&nbsp;</div>
+	</body>
+</html>

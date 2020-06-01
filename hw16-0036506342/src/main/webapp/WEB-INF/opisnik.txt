@@ -1,0 +1,51 @@
+slika1.jpg
+This picture shows one lion sitting in a savanna.
+africa, lion, sitting, savanna
+slika2.jpg
+This picture shows one zebra standing in a savanna.
+africa, zebra, standing, savanna
+slika3.jpg
+This picture shows one giraffe standing in a savanna.
+africa, giraffe, standing, savanna
+slika4.jpg
+This picture shows a giraffe and a zebra running.
+giraffe, zebra, running, zoo
+slika5.jpg
+This picture shows a lion sleeping in a zoo.
+lion, sleeping, zoo
+slika6.jpg
+This picture shows one elephant standing in a savanna.
+africa, elephant, standing, savanna
+slika7.jpg
+This picture shows an elephant sitting on a tree in a zoo.
+elephant, sitting, zoo
+slika8.jpg
+This picture shows a cheetah standing on a rock.
+africa, cheetah, standing, savanna
+slika9.jpg
+This picture shows two rhinos walking.
+africa, rhino, walking, savanna
+slika10.jpg
+This picture shows a lion hunting a zebra.
+africa, lion, zebra, hunting, savanna
+slika11.jpg
+This picture shows a liona and a cheetah hunting a zebra.
+africa, lion, cheetah, zebra, hunting, savanna
+slika12.jpg
+This picture shows two cheetahs hunting a zebra.
+africa, cheetah, zebra, hunting, savanna
+slika13.jpg
+This picture shows a gazelle standing in a savanna.
+africa, gazelle, walking, savanna
+slika14.jpg
+This picture shows two elephants standing and a zebra drinking water in a zoo.
+elephant, zebra, zoo, drinking
+slika15.jpg
+This picture shows a cheetah hunting a gazelle
+africa, cheetah, hunting, gazelle, savanna
+slika16.jpg
+This picture shows a herd of gazelles drinking water.
+gazelle, drinking
+slika17.jpg
+This picture shows a newborn giraffe in a zoo.
+giraffe, zoo
