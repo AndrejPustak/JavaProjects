@@ -1,0 +1,191 @@
+Stvari koje sam popravio u zadaæi:
+
+1.Zadatak 
+-> Ništa nisam mijenjao
+
+2.Zadatak 
+-> Ništa nisam mijenjao
+
+3.Zadatak
+-> Poboljšao sam ponašanje metode remove(Object value) tako da radi oèekivano i za prvi element
+
+4.Zadatak 
+-> Popravio sam tipfeler u EmptyStackExcpetion
+-> U StackDemo dodao sam da hvata sve potrebne excpetione i ispisuje poruku korisniku
+-> Obradu jednog elementa sam stavio u jednu metodu koja se poziva u main dijelu programa
+
+5.Zadatak
+-> Poboljšao sam ponašanje parse() metode tako da sada radi oèekivano za sve primjere
+-> Metoda getAngle() sada vraèa toèan kut
+-> Maknuo sam magical numbers 
+-> Maknuo sam stvaranje nepotrebnih referenci
+
+
+
+Pustak, Andrej (0036506342)
+
+4.zadatak minimalni uvjeti:
+ -> za pericu ti baca NumberFormatException koji nigdje ne catchaš i program se sruši
+
+5.zadatak minimalni uvjeti:
+ -> umjesto 1.618175-0.068786i vraæa 0.068786-1.618175i
+		(napisao sam ti dole gdje je greška)
+
+===================================================================
+1.ZADATAK
+
+ -> sve OK
+
+-------------------------------------------------------------------
+2.ZADATAK
+
+ -> svi testovi i moji i tvoji prolaze, i rješenje je dobro implementirano
+
+-------------------------------------------------------------------
+3.ZADATAK
+
+ -> takoðer svi testovi prolaze i sve je odlièno, no jedino bih još u insert metodu ubacio da provjeri je li value == null i baci iznimku
+
+ -> ostalo okej
+
+-------------------------------------------------------------------
+4.ZADATAK
+
+ -> dio gdje imaš switch i caseove, ja bio izvukao u posebnu metodu
+ 
+ -> ne provjeravaš je li args == 1 i ako se zada pogrešan broj argumenata, program ti se ruši
+ 
+ -> za pericu ti baca NumberFormatException koji nigdje ne catchaš i program se sruši
+
+ -> ljepše bi bilo kad biš napisao neku konkretniju poruku a ne samo error (koga èega, komu èemu)
+ 
+ -> baca EmptyStackException za "1 2 + *" i ruši se
+ 
+ -> "2 1 1 - /" baca ArithmeticException / by zero i ruši se
+ 
+ -> "+ 1 2" isto baca EmptyStackException i ruši se
+ 
+ -> zadatak bi bio sasvim okej napravljen da korisnik ne može upisati bilo što... ovako je to jedan veliki kupus
+ 
+ -> EmptyStackException ti nema prazni konstruktor, mislim da bi stvarno bilo dobro da ima i njega!
+ 
+-------------------------------------------------------------------
+5.ZADATAK
+
+ -> 	ComplexNumber num = new ComplexNumber(0.0, imaginary);
+		return num;
+		
+		sasvim nepotrebno stvaranje nove reference i stavljanje na stog. Bolje i ljepše rješenje:
+		
+		 return new ComplexNumber(0.0, imaginary);
+		
+ -> parse ti pada za i351, i3.51, -i317, -i3.17, 1+1, i+i, 
+ 
+ -> getAngle: return ang >= 0 ? ang : 2 * Math.PI + ang;
+ 
+ -> baca mi NumberFormatException za ComplexNumber.parse("-1-i");
+	i ComplexNumber.parse("1+i");
+	
+ -> kada primam ComplexNumber, provjerio bih prvo na nije null
+ 
+ -> add, sub,... sve može kraæe, u jednom redu
+ 
+ -> 1e-6 stavi kao konstantu da ne bude magical number
+
+
+==================================================================================================================
+
+ArrayIndexedCollection i LinkedListIndexedCollection dobro rade samo bi trebalo više testova napraviti jer fale testovi za addAll i remove(Object value).
+
+StackDemo loše implementiran. Imao si dobru ideju sa switch case, ali onda si trebao izdvojiti kod koji se ponavlja i upisati samo nužan kod u case sluèajeve. 
+        num2 = (Integer) stack.pop();
+        num1 = (Integer) stack.pop();
+	number = Integer.valueOf(num1 + num2);
+	stack.push(number);
+Prve dvije linije si mogao izdvojiti iznad, a zadnju staviti na kraj provjere svega i dobiti bolji i èitljiviji kod. Problem nadalje nastaje što nema nikakvih provjera potencijalnih grešaka, te se pojavljuju greške na ekran i puca program bez ikakve obavijesti što bi mogao biti problem. Kod bi trebalo POPRAVITI jer æe veæ u iduæoj zadaæi trebati!
+
+ComplexNumber ne radi parser kako treba. Uopæe ne prima plus ili minus u stringu te automatski puca bez neke obavijesti o èemu se radi. POPRAVITI i to.
+
+Javadoc je odlièno napisan.
+
+================================================================================================================
+
+[osobni komentar] - dio u kojem dajem svoje misljenje, ne uzimam ga u obzir pri ocjenjivanju zadace
+
+	=== paket i ime zadace ===
+
+src folder je dobro strukturiran, ali je bespotrebno zapakiran .settings folder
+
+	=== 1. zadatak 'Collection.java' ===
+
+sve odgovara definiciji ispravno rijesenog zadatka, nemam primjedbi
+
+javadoc solidan i konzistentan
+
+	=== 2. zadatak 'ArrayIndexedCollection.java' ===
+
+svi konstruktori rade potrebne provjere argumenata, te se medusobno delegiraju, kao sto je trazeno
+
+razred sadrzi drugu verziju metode remove(), obje metode rade, sve u redu
+
+[osobni komentar]
+nisi imao test za remove(Object), ja sam dodao, buduci da sve radi nije problem, samo napomena za ubuduce
+
+za sve si koristio asserEquals, iako mozes u vecini svojih slucajeva koje si definirao koristiti assertTrue / assertFalse
+
+prepravi javadoc kad overrideas metode, jer sad kad gledam javadoc od npr. add(), kaze mi da je ovdje implementacija prazna metoda, sto ocito nije, nego je to naslijeden javadoc od Collection.add()
+
+	=== 3. zadatak 'LinkedListIndexedCollection.java' ===
+
+imas osnovne uvjete, ali ti remove ne radi na svemu
+
+@Test
+public void removeTestObject() {
+	LinkedListIndexedCollection col = new LinkedListIndexedCollection();
+	col.add(5);
+	col.add("Test");
+	assertEquals(true, col.contains(5));
+	col.remove(Integer.valueOf(5)); 	// <-- dodao sam remove(Object)
+	assertEquals(false, col.contains(5));
+	assertThrows(IndexOutOfBoundsException.class, () -> col.insert (9,2));
+}
+kad tvoj program proba ovo izvest, tijekom remove() mi izleti NullPointerException.
+ovo se dogada jer removea prvi element, pa u tvojoj liniji
+	if (node.value.equals(value)) {
+		node.previous.next = node.next;
+imas node.previous( = null).next, i onda dobijem exception.
+kad sam testirao za "Test" koji nije 1. element, onda je sve u redu
+
+[osobni komentar]
+sve isto kao u 2. zadatku, test, assert i javadoc
+
+	=== 4. zadatak 'ObjectStack.java' ===
+
+definicija minimalno prihvatljivog ponasanja:
+4. zadatak: ... pokrenuti uz "8 2 / perica 3 - *" i program mora ispisati korisniku pogrešku (tipa: "izraz ne valja" ili nešto srodno) te prekinuti s radom. Program se ne smije raspasti uz ispisani stack-trace korisniku.
+
+dobivam stack-trace na ekranu za lose inpute u StackDemo, to je lose ponasanje!
+
+ne zadovoljavas minimalne uvjete!
+
+[osobni komentar]
+u javadocu za peek() imas malu zabunu
+napravio si tipfeler u exceptionu emptystackexcPEtion.java, a u javadocu si koristio @throws EmptyStackException, koji nije iz ovog paketa, a nista nije importano i tu se malo kod zbunio
+
+	=== 5. zadatak 'ComplexNumber.java' ===
+
+ocekivani ispis je obrnuto ispisan, realna i kompleksna vrijednost su zamijenjene
+navodno je ocekivana vrijednost ovakva:
+Ovisno o redoslijedu korijena u root funkciji ili 1.618175 - 0.068786i ili -1.618175 + 0.068786i.
+https://ferko.fer.hr/ferko/QAAQuestion.action?courseInstanceID=2018L%2F38047&questionID=1247
+ispis koji ti dajes je : '0.068786-1.618175i'
+
+definicija minimalno prihvatljivog ponasanja:
+5. zadatak: primjer ComplexDemo sa stranice 10 mora ispisati oèekivani rezultat.
+
+ne zadovoljavas minimalne uvjete!
+
+imas dosta testova i svi su dobri
+
+[osobni komentar]
+javadoc za metodu getAngle(), nedostaje ti opis returna
